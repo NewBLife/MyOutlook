@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:c="clr-namespace:MyOutlook.Behaviors"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="MyOutlook.Views.MainPage"
+             Title="收件箱">
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"
+                iOS="20, 40, 20, 20"
+                Android="20, 20, 20, 20"
+                WinPhone="0, 0, 0, 0" />
+  </ContentPage.Padding>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <c:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <ScrollView Orientation="Vertical">
+            <ListView x:Name="lstView" ItemsSource="{Binding Messages}">
+                <ListView.Behaviors>
+                    <c:EventToCommandBehavior EventName="ItemTapped" 
+                                              Command="{Binding ShowMessageCommand}" 
+                                              CommandParameter="{Binding SelectedItem, Source={x:Reference lstView}}"
+                                              EventArgsConverter="{StaticResource ItemTappedConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" FontSize="15" Text="{Binding subject}" />
+                                <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="End">
+                                    <Label FontSize="10" FontAttributes="Italic" Text="From:"/>
+                                    <Label FontSize="10" FontAttributes="Italic" Text="{Binding from.emailAddress.address}" TextColor="#503026"/>
+                                    <Label FontSize="10" FontAttributes="Italic" Text="{Binding from.emailAddress.name}" TextColor="#503026"/>
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+    </ScrollView>
+  </StackLayout>
+</ContentPage>

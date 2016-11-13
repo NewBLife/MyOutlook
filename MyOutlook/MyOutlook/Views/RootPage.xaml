@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                  prism:ViewModelLocator.AutowireViewModel="True"
+                  x:Class="MyOutlook.Views.RootPage"
+                  IsPresented="{Binding IsPresented, Mode=TwoWay}">
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu">
+            <StackLayout Spacing="10">
+                <Label Text="菜单"/>
+                <Button Text="收件箱" TextColor="Blue" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/MainPage" />
+                <Button Text="设定" TextColor="Blue" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/SettingPage" />
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <ContentPage Title="Dummy" />
+    </MasterDetailPage.Detail>
+</MasterDetailPage>
